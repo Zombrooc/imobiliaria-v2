@@ -1,0 +1,37 @@
+{
+  "name": "imobiliaria-v2",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@auth/firebase-adapter": "^1.0.9",
+    "@headlessui/react": "^1.7.17",
+    "@heroicons/react": "^2.0.18",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@vercel/speed-insights": "^1.0.1",
+    "axios": "^1.6.2",
+    "firebase": "^10.5.2",
+    "next": "14.0.4",
+    "next-auth": "^4.24.5",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hook-form": "^7.47.0",
+    "react-icons": "^4.11.0",
+    "sharp": "^0.32.6",
+    "vercel": "32.6.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.6",
+    "autoprefixer": "^10.0.1",
+    "cypress": "^13.4.0",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.4",
+    "postcss": "^8",
+    "tailwindcss": "^3.3.0"
+  }
+}
