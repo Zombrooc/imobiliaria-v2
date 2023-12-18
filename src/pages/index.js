@@ -19,7 +19,6 @@ import { data } from "autoprefixer";
 const URL = process.env.NEXT_PUBLIC_SITEURL;
 
 export default function Home({ pageProps: { properties } }) {
-  console.log(properties)
   // const router = useRouter()
   // const [user, setUser] = useState(null);
   // const [isLoading, setIsLoading] = useState(false);
