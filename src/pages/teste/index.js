@@ -1,6 +1,8 @@
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 
+import convert2Base64 from '@/utils/convert2Base64';
+
 const URL = process.env.NEXT_PUBLIC_SITEURL;
 
 export default function Teste() {
@@ -15,15 +17,15 @@ export default function Teste() {
 
   const onSubmit = async ({ file }) => {
 
-    const formData = new FormData();
-
     const image = file[0]
 
-    await formData.append('file', image);
+    const dataURL = await convert2Base64(image);
+
+    console.log('Data URL: ', dataURL)
 
     const { data } = await axios.post(`${URL}/api/fileUpload/fileProcessing`,
-      formData
-      , { headers: { 'Content-Type': 'multipart/form-data' } })
+      { file: dataURL }
+    )
 
 
     // const formData = new FormData();

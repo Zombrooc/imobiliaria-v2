@@ -1,33 +1,33 @@
 import sharp from 'sharp';
-import formidable from 'formidable';
-import { createRouter, expressWrapper } from "next-connect";
 
 export const config = {
   api: {
-    bodyParser: false,
-  },
-};
+    bodyParser: {
+      sizeLimit: '60mb' // Set desired value here
+    }
+  }
+}
 
 export default async function handler(req, res) {
 
+  const { file } = req.body;
+
   switch (req.method) {
     case 'POST':
-      const form = formidable({});
-      let fields;
-      let files;
-      try {
-        [fields, files] = await form.parse(req);
-        console.log(files)
-      } catch (err) {
-        // example to check for a very specific error
-        if (err.code === formidableErrors.maxFieldsExceeded) {
+      const uri = file.split(';base64,').pop();
+      let imgBuffer = Buffer.from(uri, 'base64');
 
-        }
-        console.error(err);
-        res.writeHead(err.httpCode || 400, { 'Content-Type': 'text/plain' });
-        res.end(String(err));
-        return;
-      }
+      sharp(imgBuffer)
+        .resize({ width: 1080 })
+        .webp({
+          quality: 80,
+          lossless: true
+        })
+        .toBuffer()
+        .then(data => {
+          console.log(data)
+          // 100 pixels wide, auto-scaled height
+        });
     // const form = new formidable.IncomingForm();
     // const files = [];
     // form.on('file', function (field, file) {
