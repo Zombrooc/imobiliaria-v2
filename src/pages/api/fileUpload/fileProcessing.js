@@ -8,14 +8,32 @@ export const config = {
   }
 }
 
+
+
 export default async function handler(req, res) {
 
   const { file } = req.body;
 
   switch (req.method) {
     case 'POST':
+
+      let imgURI;
+      let bluredImgURI;
+
       const uri = file.split(';base64,').pop();
       let imgBuffer = Buffer.from(uri, 'base64');
+
+      sharp(imgBuffer)
+        .resize({ width: 200 })
+        .blur()
+        .webp({
+          quality: 10,
+          lossless: true
+        })
+        .toBuffer()
+        .then(data => {
+          bluredImgURI = data
+        });
 
       sharp(imgBuffer)
         .resize({ width: 1080 })
@@ -25,25 +43,13 @@ export default async function handler(req, res) {
         })
         .toBuffer()
         .then(data => {
-          console.log(data)
-          // 100 pixels wide, auto-scaled height
+          imgURI = data
         });
-    // const form = new formidable.IncomingForm();
-    // const files = [];
-    // form.on('file', function (field, file) {
-    //   files.push([field, file]);
-    // })
-    // form.on('end', () => resolve(files));
-    // form.on('error', err => reject(err));
-    // form.parse(req, () => {
-    //   console.log(req)
-    // });
-    // const resize = await sharp(data)
-    //   .resize({ width: 800 })
-    //   .toFile(__dirname + '/tmp/resize_robo.jpg')
 
-    // console.log(resize)
-    // return resize
+      return {
+        imgURI,
+        bluredImgURI
+      }
   }
   return;
 }
